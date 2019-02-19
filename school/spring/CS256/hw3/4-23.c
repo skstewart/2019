@@ -8,29 +8,52 @@
 int circle(void);
 int rectangle(void);
 int triangle(void);
+int menu(void);
 
 int main(void) {
+	menu();
+	return(0);
+}
+
+int menu(){
 	int n = 0;
-	printf("Menu:\n"
-			"1. Calculate the Area of a Circle\n"
-			"2. Calculate the Area of a Rectangle\n"
-			"3. Calculate the Area of a Triangle\n");
-	scanf("%d",&n);
-	switch(n){
-	case 1:{ 
-	    circle();
-	    
-	}break;
-	case 2: { 
-	    rectangle();
-	    
-	}break;
-	case 3: { 
-	    triangle();
-	    
-	}break;
-	}
-return 0;
+		printf("Menu:\n"
+				"1. Calculate the Area of a Circle\n"
+				"2. Calculate the Area of a Rectangle\n"
+				"3. Calculate the Area of a Triangle\n"
+				"4. Exit\n");
+		scanf("%d",&n);
+		switch(n){
+		case 1:{
+		    circle();
+		    menu();
+
+		}break;
+		case 2: {
+		    rectangle();
+		    menu();
+
+		}break;
+		case 3: {
+		    triangle();
+		    menu();
+
+		}break;
+		
+		case 4: {
+			return(0);
+		}
+			break;
+			
+		
+		default: menu();
+			break;
+		}
+		
+	return 0;
+	
+	
+	
 }
 
 int circle(){
