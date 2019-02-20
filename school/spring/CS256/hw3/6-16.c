@@ -6,13 +6,13 @@
 
 #include <stdio.h>
 
-double rate(int years, double BP, double DP, double P);
+double rate(int years, double BP, double DP, double ,int curr);
 int input();
 
 
 int main(void) {
 	input();
-	
+
 
 	return(0);
 }
@@ -22,7 +22,7 @@ int input(){
 	double birthRate = -1;
 	double deathRate = -1;
 	int years = 0;
-	
+
 	//printf("Please input a starting size over 2: \n");
 	//scanf("%lf",start);
 	while(start < 2){
@@ -46,24 +46,27 @@ int input(){
 	    printf("Please input a number of years greater than 1: \n");
 	    scanf("%d",&years);
 	}
-	
-	rate(years,birthRate,deathRate,start);
+
+	rate(years,birthRate,deathRate,start,1);
     return 0;
 }
 
-double rate(int years, double BP, double DP, double P){
+double rate(int years, double BP, double DP, double P, int curr){
     double N = 0;
-    if (years == 1){
+    if (curr == years){
          N = P + BP - DP;
-        printf("Year %d population size: %lf\n",years,N);
-        
+        printf("Population size after  %d  years: %lf\n",curr,N);
+
     }
-    else{
-         N = P + BP - DP;
-        printf("Year %d population size: %lf\n",years,N);
-        return rate((years - 1),BP,DP,N);
-        
-    }
-    
+    else if (curr < years){
+        N = P + BP - DP;
+       printf("Population size after  %d  years: %lf\n",curr++,N);
+
+       return rate((years),BP,DP,N, curr);
+
+   }
+
+    else return 0;
+
     return 0;
 }
