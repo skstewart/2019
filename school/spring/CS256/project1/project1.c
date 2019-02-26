@@ -42,14 +42,14 @@ int main(void) {
 	return(0);
 }
 int initial(void){
-    
+
     for(int i = 0; i < 15; i++){ //initialize all seats as available
 		for(int j = 0; j < 30; j++){
 		    seating[i][j] = 1;
 		}
 
 	} //end double for loop
-	
+
 	return 0;
 }
 
@@ -57,7 +57,7 @@ int initial(void){
 //Purpose: allows user to enter prices for each row
 int pricing(void){
     for(int k = 0; k < 15; k++){ //set the prices for each row
-    	printf("Please enter the price for seats in row %d:",k);
+    	printf("Please enter the price for seats in row %d: \n",k);
 	    scanf("%f", &prices[k]);
 	    }
 
@@ -66,7 +66,7 @@ int pricing(void){
     }
 
 int displaySeatingChart(void){
-    
+
 	for(int i = 1; i < 16; i++){ //initialize all seats as available
 	    printf("Row %d: ",i);
 		for(int j = 1; j < 31; j++){
@@ -116,7 +116,7 @@ int buyTickets(void){
     int seat = 0;
     int buy = 1;
     while(buy == 1){
-        printf("Please enter a row number, or enter 0 to exit: ");
+        printf("Please enter a row number, or enter 0 to exit: \n");
         scanf("%d",&userInput);
         if(userInput < 16 && userInput > 0){
             row = userInput;
@@ -125,7 +125,7 @@ int buyTickets(void){
             buy = 0;
              break;
         }
-        printf("Please enter a seat number, or enter 0 to exit: ");
+        printf("Please enter a seat number, or enter 0 to exit: \n");
         scanf("%d",&userInput);
         if(userInput < 31 && userInput > 0){
             seat = userInput;
@@ -140,7 +140,7 @@ int buyTickets(void){
             ticketsSold++;
             printf("Seat %d-%d has been purchased for $%f\n",row,seat,prices[row-1]);
         }
-    
+
 
     return 0;
 }
@@ -168,7 +168,7 @@ int viewAvailableInRow(void){
     else{
         printf("Please enter a valid row. ");
         viewAvailableInRow();
-        
+
     }
     return 0;
 }
