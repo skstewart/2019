@@ -32,7 +32,7 @@ int main(void) {
 
 	initial();
 
-	//pricing();
+	pricing();
 	displaySeatingChart();
 	menu();
 
