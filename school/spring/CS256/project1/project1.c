@@ -15,6 +15,7 @@ int viewTicketsSold(void);
 int viewRevenue(void);
 int viewAvailableInRow(void);
 int viewTotalAvailable(void);
+int initial(void);
 float revenue;
 int seatsAvailable;
 int ticketsSold;
@@ -29,12 +30,7 @@ int main(void) {
     ticketsSold = 0;
     seatsAvailable = 450;
 
-	for(int i = 0; i < 15; i++){ //initialize all seats as available
-		for(int j = 0; j < 30; j++){
-		seating[i][j] = 1;
-		}
-
-	} //end double for loop
+	initial();
 
 	//pricing();
 	displaySeatingChart();
@@ -44,6 +40,17 @@ int main(void) {
 
 
 	return(0);
+}
+int initial(void){
+    
+    for(int i = 0; i < 15; i++){ //initialize all seats as available
+		for(int j = 0; j < 30; j++){
+		    seating[i][j] = 1;
+		}
+
+	} //end double for loop
+	
+	return 0;
 }
 
 //Function: int pricing(void)
@@ -59,16 +66,11 @@ int pricing(void){
     }
 
 int displaySeatingChart(void){
-    static char seating[15][30]; //create table of seating
-	for(int i = 0; i < 15; i++){ //initialize all seats as available
+    
+	for(int i = 1; i < 16; i++){ //initialize all seats as available
 	    printf("Row %d: ",i);
-		for(int j = 0; j < 30; j++){
-			if(seating[i][j] == 1){
-			    printf("# ");
-			}
-			else if(seating[i][j] == 0){
-			    printf("* ");
-			}
+		for(int j = 1; j < 31; j++){
+			printf("%c  ", (seating[i-1][j-1] ==  1? '#' : '*'));
 		}
 		printf("\n");
 	}
@@ -114,35 +116,31 @@ int buyTickets(void){
     int seat = 0;
     int buy = 1;
     while(buy == 1){
-        printf("Please enter a row number, or enter -1 to exit: ");
+        printf("Please enter a row number, or enter 0 to exit: ");
         scanf("%d",&userInput);
-        if(userInput < 14 && userInput > -1){
+        if(userInput < 16 && userInput > 0){
             row = userInput;
         }
-        else if(userInput == -1){
+        else if(userInput == 0){
             buy = 0;
              break;
         }
-        printf("Please enter a seat number, or enter -1 to exit: ");
+        printf("Please enter a seat number, or enter 0 to exit: ");
         scanf("%d",&userInput);
-        if(userInput < 29 && userInput > -1){
+        if(userInput < 31 && userInput > 0){
             seat = userInput;
         }
-        else if(userInput == -1){
+        else if(userInput == 0){
             buy = 0;
              break;
         }
-        if(seating[row][seat] == 1){
-            seating[row][seat] = 0;
-            revenue+=prices[row];
+            seating[row-1][seat-1] = 0;
+            revenue+=prices[row-1];
             seatsAvailable-=1;
             ticketsSold++;
-            printf("Seat %d-%d has been purchased for $%f\n",row,seat,prices[row]);}
-        else if(seating[row][seat] == 0){
-        	printf("Seat %d-%d is already sold\n",row,seat,);}
+            printf("Seat %d-%d has been purchased for $%f\n",row,seat,prices[row-1]);
         }
-        }
-
+    
 
     return 0;
 }
@@ -160,11 +158,18 @@ int viewAvailableInRow(void){
     int avail = 0;
     printf("Please enter a row number:");
     scanf("%d",&row);
-    for(int x = 0; x < 30; x++){
-        if(seating[row][x] == 1)
-            avail++;
+    if(row > 0 && row < 16){
+        for(int x = 0; x < 30; x++){
+            if(seating[row-1][x] == 1)
+                avail++;
+        }
+        printf("There are %d seats available in the row.\n",avail);
     }
-    printf("There are %d seats available in the row.\n",avail);
+    else{
+        printf("Please enter a valid row. ");
+        viewAvailableInRow();
+        
+    }
     return 0;
 }
 int viewTotalAvailable(void){
