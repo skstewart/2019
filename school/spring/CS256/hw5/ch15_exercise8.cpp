@@ -69,7 +69,8 @@ int main (){
   cout << "\nAddress : " << customer.getAddress () << "," << customer.getCity () << "," << customer.getState () << " " << customer.getZip ();
   cout << "\nPhone : " << customer.getPhone ();
   cout << "\nPurchase amount: " << customer.getPurchasesAmount();
-  cout << "\nDiscount Level: " << customer.getDiscountLevel();
+  cout << "\nDiscount Level: %" << 100*customer.getDiscountLevel();
+
 
   return 0;
 };
