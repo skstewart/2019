@@ -88,29 +88,23 @@ private:
   bool mailingList;
 
 public:
-//set and get methods
-  void setCustomerNumber (int customerNumber)
-  {
+
+  void setCustomerNumber (int customerNumber){
     this->customerNumber = customerNumber;
   }
-  int getCustomerNumber ()
-  {
+  int getCustomerNumber (){
     return customerNumber;
   }
-  void setMailingList (bool mailingList)
-  {
+  void setMailingList (bool mailingList){
     this->mailingList = mailingList;
   }
-  int getMailingList ()
-  {
+  int getMailingList (){
     return mailingList;
   }
 
 };
 
-int
-main ()
-{
+int main (){
 
   CustomerData customer;
 
@@ -126,11 +120,13 @@ main ()
   customer.setPhone ("222-222-2222");
 
   cout << "Customer Number : " << customer.getCustomerNumber ();
-  cout << "\nName : " << customer.getFirstName () << " " << customer.
-    getLastName ();
-  cout << "\nAddress : " << customer.getAddress () << "," << customer.
-    getCity () << "," << customer.getState () << " " << customer.getZip ();
+  cout << "\nName : " << customer.getFirstName () << " " << customer.getLastName ();
+  cout << "\nAddress : " << customer.getAddress () << "," << customer.getCity () << "," << customer.getState () << " " << customer.getZip ();
   cout << "\nPhone : " << customer.getPhone ();
-
+  cout << "\nOn Mailing List: ";
+  if (customer.getMailingList() == true)
+  cout << "Yes";
+  else if (customer.getMailingList() == false)
+  cout << "No";
   return 0;
 }
