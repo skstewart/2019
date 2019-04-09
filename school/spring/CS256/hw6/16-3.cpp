@@ -2,12 +2,12 @@
 using namespace std;
 
 template <typename T>
-inline T const& Max(T const& firstData, T const& secondData)
+T const& Max(T const& firstData, T const& secondData)
 {
 	return firstData < secondData ? secondData : firstData;
 }
 template <typename T>
-inline T const& Min(T const& firstData, T const& secondData)
+T const& Min(T const& firstData, T const& secondData)
 {
 	return firstData > secondData ? secondData : firstData;
 }
