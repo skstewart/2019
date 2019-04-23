@@ -1,9 +1,10 @@
-//Name: Shayna Stewart
+: //Name: Shayna Stewart
 //CS256 Midterm
 //Due: 4/18/19
 
 #include <vector>
 #include <iostream>
+
 using namespace std;
 
 class Human {
@@ -12,14 +13,37 @@ private: string name;
 		 char sex;
 		 Human();
 		 
-protected: Human(string name, int age, char sex);
+protected: Human(string n, int a, char s) {
+	name = n;
+	age = a;
+	sex = s;
+}
 		   //protected destructr
-public: void setName(string n);
-		string getName();
-		void setAge(int a);
-		int getAge();
-		void setSex(char ch);
-		char getSex();
+public: 
+	friend class Parent;
+	friend class Child;
+
+		void setName(string n) {
+			name = n;
+		}
+		string getName() {
+			return name;
+		}
+		void setAge(int a) {
+			age = a;
+		}
+		int getAge() {
+			return age;
+		}
+		void setSex(char ch) {
+			sex = ch;
+		}
+		char getSex() {
+			return sex;
+		}
+
+		
+		
 };
 
 class Child : public Human {
@@ -27,9 +51,22 @@ private: string momName;
 		 string dadName;
 		 int allowance;
 		 Child();
-public: Child(string name, int age, char sex, string momName, string dadName);
-		int getAllowance();
-		void printParent();
+public: Child(string n, int a, char s, string mN, string dN) {
+	allowance = 0;
+	Human::name = n;
+	age = a;
+	sex = a;
+	momName = mN;
+	dadName = dN;
+}
+		int getAllowance() {
+			return allowance;
+		}
+		friend class Parent;
+		void printParent() {
+			cout << &momName << endl;
+			cout << &dadName;
+		}
 
 };
 
@@ -37,18 +74,19 @@ class Parent : public Human {
 
 private: vector<string> children;
 		 Parent();
-public: Parent(string name, int age, char sex);
-		void printChild();
-		void setChild(Child ch);
-		void setChildAllowance(int allow, Child ch);
-
-
+public: Parent(string n, int a, char s) {
+	name = n;
+	age = a;
+	sex = s;
+}
 		void setChild(Child ch){
-		children.push_back(ch);
+	//	children.push_back(ch.getName);
 }
 
 		void printChild() {
-
+			for (auto i = children.begin(); i != children.end(); ++i) {
+			//cout << "" << *i << " ";
+		}
 
 		}
 
@@ -58,6 +96,12 @@ public: Parent(string name, int age, char sex);
 		}
 		
 };
+
+void printInfo(Human hu) {
+	cout << "Name: " << &hu.getName() << endl;
+	cout << "Age: " << hu.getAge()<< endl;
+	cout << "Sex: " << hu.getSex() << endl;
+}
 
 int main()
 {
@@ -77,5 +121,15 @@ int main()
 	marge.setChild(maggie);
 	marge.setChild(bart);
 
+	cout << bart.getAllowance();
+	homer.setChildAllowance(5,bart);
+	cout << bart.getAllowance();
+
+	
+	bart.printParent();
+
+
+	printInfo(marge);
+	printInfo(lisa);
 
 }
