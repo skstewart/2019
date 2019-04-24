@@ -113,13 +113,13 @@ public class Main {
 
             if (foundSolution == false) {
 
-                solutions_arr[i] = Double.MAX_VALUE;
+                solutions_arr[i] = Double.POSITIVE_INFINITY;
             } else {
                 solutions_arr[i] = c;
                 //System.out.println(solutions_arr[i]);
             }
 
-            if (solutions_arr[i] != Double.MAX_VALUE) {
+            if (solutions_arr[i] != Double.POSITIVE_INFINITY) {
                 System.out.println("Convergence at x = " + solutions_arr[i] + "\n");
 
             }
@@ -148,7 +148,7 @@ public class Main {
         }
 
         double lastc = 0;
-        double lastError = Double.MAX_VALUE;
+        double lastError = Double.POSITIVE_INFINITY;
         int divergeCount = 0;
         for (int i = 0; i <= nmax; i++) {
             c = (a * fb - b * fa) / (fb - fa);
@@ -211,7 +211,7 @@ public class Main {
             fp = function2Derivative(x);
         }
         System.out.printf("n: %2d  x: %6.3f  f(x): %6.3f  f'(x): %6.3f\n", 0, x, fx, fp);
-        double lastError = Double.MAX_VALUE;
+        double lastError = Double.POSITIVE_INFINITY;
         int divergeCount = 0;
         for (int i = 1; i <= nmax; i++) {
             if (functionToUse == 1) {
@@ -282,7 +282,7 @@ public class Main {
         System.out.printf("n: %2d  a: %6.3f  f(a): %6.3f\n"
                 + "n: %2d  b: %6.3f  f(b): %6.3f\n", 0, a, fa, 1, b, fb);
 
-        double lastError = Double.MAX_VALUE;
+        double lastError = Double.POSITIVE_INFINITY;
         int divergeCount = 0;
         for (int i = 2; i <= nmax; i++) {
             //If the absolute value of fa > absolute value of fb, swap a with b and fa with fb.
@@ -329,10 +329,10 @@ public class Main {
     }
 
     private static void secantMethodModified(double x, double delta, int nmax, double errorThreshold, int functionToUse) {
-        double fx, fdeltaxPlusx, error;
+        double fx, fdeltaxPlusx, error; //f(x), f(deltax+x), error
 
         //Initialize function values,
-        if (functionToUse == 1) {
+        if (functionToUse == 1) { //initializing f(x)
             fx = function1(x);
             fdeltaxPlusx = function1(x + (delta * x));
         } else {
@@ -342,24 +342,15 @@ public class Main {
 
         System.out.printf("n: %2d  x: %6.3f  f(x): %6.3f  delta: %6.3f  f(x + delta*x): %6.3f\n", 0, x, fx, delta, fdeltaxPlusx);
 
-        double lastError = Double.MAX_VALUE;
-        int divergeCount = 0;
+        double lastError = Double.POSITIVE_INFINITY; //initialize as infinity
+        
         for (int i = 1; i <= nmax; i++) {
-            error = fx * ((delta * x) / (fdeltaxPlusx - fx));
+            error = fx * ((delta * x) / (fdeltaxPlusx - fx)); 
 
-            //If the current error is greater than the last error for 3 times in a row, solution is divergent.
-            //If solution is NaN, it does not converge.
-            if (Math.abs(error) > Math.abs(lastError)) {
-                divergeCount++;
-            } else if (divergeCount >= 3) {
-                System.out.println("Solution is divergent.\n");
-                return;
-            } else if (Double.isNaN(x)) {
+           if (Double.isNaN(x)) {   //
                 System.out.println("Solution does not converge.\n");
                 return;
-            } else {
-                divergeCount = 0;
-            }
+            } 
 
             if (Math.abs(error) <= errorThreshold) {
                 System.out.println("Convergence at " + x + ".\n");
