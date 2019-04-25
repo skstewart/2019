@@ -6,8 +6,7 @@ Description: Runs 5 methods to find roots of polynomial equation. Outputs status
 
 
 
-*/
-
+ */
 package cs301_project2;
 
 public class Main {
@@ -15,14 +14,9 @@ public class Main {
     public static void main(String[] args) {
         double errorThreshold = .01;
         int nmax = 100;
+
         System.out.println("Bisection Method:");
         bisectionMethod(0, 4, nmax, errorThreshold, 1);
-
-        System.out.println("False Position Method:");
-        falsePositionMethod(0, 1, nmax, errorThreshold, 1);
-        falsePositionMethod(1, 2, nmax, errorThreshold, 1);
-        falsePositionMethod(2, 3, nmax, errorThreshold, 1);
-        falsePositionMethod(3, 4, nmax, errorThreshold, 1);
 
         System.out.println("Newton Method:");
         newtonMethod(0, nmax, errorThreshold, .01, 1);
@@ -36,12 +30,23 @@ public class Main {
         secantMethod(2, 3, nmax, errorThreshold, 1);
         secantMethod(3, 4, nmax, errorThreshold, 1);
 
+        System.out.println("False Position Method:");
+        falsePositionMethod(0, 1, nmax, errorThreshold, 1);
+        falsePositionMethod(1, 2, nmax, errorThreshold, 1);
+        falsePositionMethod(2, 3, nmax, errorThreshold, 1);
+        falsePositionMethod(3, 4, nmax, errorThreshold, 1);
+
         System.out.println("Modified Secant Method:");
         secantMethodModified(0, 0.01, nmax, errorThreshold, 1);
         secantMethodModified(1, 0.01, nmax, errorThreshold, 1);
         secantMethodModified(2, 0.01, nmax, errorThreshold, 1);
         secantMethodModified(3, 0.01, nmax, errorThreshold, 1);
 
+        bisectionMethod(120, 130, nmax, errorThreshold, 2);
+        newtonMethod(125, nmax, errorThreshold, .01, 2);
+        secantMethod(120, 130, nmax, errorThreshold, 2);
+        falsePositionMethod(120, 130, nmax, errorThreshold, 2);
+        secantMethodModified(125, 0.01, nmax, errorThreshold, 2);
     }
 
     private static double function1(double x) {
@@ -97,7 +102,8 @@ public class Main {
                     fc = function2(c);
                 }
                 error = current_b - current_a;
-                System.out.println("n: " + n + " a: " + current_a + " b: " + current_b + " c: " + c + " f(a): " + fa + " f(b): " + fb + " f(c) " + fc + " error: " + error);
+                
+                System.out.printf("n: %2d  a: %6.3f  b: %6.3f  c: %6.3f  f(a): %6.3f  f(b): %6.3f  f(c): %6.3f  error: %6.3f\n",n,a,b,c,fa,fb,fc, error);
                 n++;
                 if ((fc > 0 && fa < 0) || (fc < 0 && fa > 0)) {  // f(a) and f(m) have different signs: move b
                     current_b = c;
@@ -116,7 +122,6 @@ public class Main {
                 solutions_arr[i] = Double.POSITIVE_INFINITY;
             } else {
                 solutions_arr[i] = c;
-                //System.out.println(solutions_arr[i]);
             }
 
             if (solutions_arr[i] != Double.POSITIVE_INFINITY) {
@@ -126,74 +131,6 @@ public class Main {
 
         }
 
-    }
-
-    private static void falsePositionMethod(double a, double b, int nmax, double errorThreshold, int functionToUse) {
-        double error = 0;
-        double c;
-        double fa, fb, fc;
-
-        //Initialize function values,
-        if (functionToUse == 1) {
-            fa = function1(a);
-            fb = function1(b);
-        } else {
-            fa = function2(a);
-            fb = function2(b);
-        }
-
-        //If the results of f(a) and f(b) have the same signs, there is no root between, so return.
-        if (Math.signum(fa) == Math.signum(fb)) {
-            return;
-        }
-
-        double lastc = 0;
-        double lastError = Double.POSITIVE_INFINITY;
-        int divergeCount = 0;
-        for (int i = 0; i <= nmax; i++) {
-            c = (a * fb - b * fa) / (fb - fa);
-            error = (c - lastc) / c;
-
-            //If the current error is greater than the last error for 3 times in a row, solution is divergent.
-            //If solution is NaN, it does not converge.
-            if (Math.abs(error) > Math.abs(lastError)) {
-                divergeCount++;
-            } else if (divergeCount >= 3) {
-                System.out.println("Solution is divergent.\n");
-                return;
-            } else if (Double.isNaN(c)) {
-                System.out.println("Solution does not converge.\n");
-                return;
-            } else {
-                divergeCount = 0;
-            }
-
-            if (functionToUse == 1) {
-                fc = function1(c);
-
-            } else {
-                fc = function2(c);
-            }
-            System.out.printf("n: %2d  a: %6.3f  b: %6.3f  c: %6.3f  "
-                    + "f(a): %6.3f  fb: %6.3f  fc: %6.3f  error: %6.3f\n", i, a, b, c, fa, fb, fc, error);
-
-            if (Math.abs(error) <= errorThreshold) {
-                System.out.println("Convergence at " + c + ".\n");
-                return;
-            }
-
-            lastc = c;
-            if (Math.signum(fa) != Math.signum(fc)) {
-                b = c;
-                fb = fc;
-            } else {
-                a = c;
-                fa = fc;
-            }
-
-            lastError = error;
-        }
-        System.out.println("Does not converge after " + nmax + " iterations.\n");
     }
 
     private static void newtonMethod(double x, int nmax, double errorThreshold, double delta, int functionToUse) {
@@ -235,20 +172,6 @@ public class Main {
 
             System.out.printf("n: %2d  x: %6.3f  f(x): %6.3f  f'(x): %6.3f  error: %6.3f\n", i, x, fx, fp, error);
 
-            //If the current error is greater than the last error for 3 times in a row, solution is divergent.
-            //If solution is NaN, it does not converge.
-            if (Math.abs(error) > Math.abs(lastError)) {
-                divergeCount++;
-            } else if (divergeCount >= 3) {
-                System.out.println("Solution is divergent.\n");
-                return;
-            } else if (Double.isNaN(x)) {
-                System.out.println("Solution does not converge.\n");
-                return;
-            } else {
-                divergeCount = 0;
-            }
-
             if (Math.abs(error) < errorThreshold) {
                 System.out.println("Convergence at " + x + ".\n");
                 return;
@@ -259,9 +182,50 @@ public class Main {
     }
 
     private static void secantMethod(double a, double b, int nmax, double errorThreshold, int functionToUse) {
-        double fa, fb, error;
+        double fa, fb, error = b - a, c = 0, fc = 0;
+        int n = 1;
 
         //Initialize function values,
+        if (functionToUse == 1) {
+            fa = function1(a);
+            fb = function1(b);
+            fc = function1(c);
+        } else {
+            fa = function2(a);
+            fb = function2(b);
+            fc = function2(c);
+        }
+        System.out.printf("n: %2d  a: %6.3f  f(a): %6.3f b: %6.3f  f(b): %6.3f c: %6.3f  f(c): %6.3f  error: %6.3f\n", 0, a, fa, b, fb, c, fc, error);
+
+        
+        while ((error > errorThreshold) && (n < nmax)) {
+            double d = fb - fa;
+            c = b - fb * (b - a) / d;
+            if (functionToUse == 1) {
+                fc = function1(c);
+            } else {
+                fc = function2(c);
+            }
+            a = b;
+            b = c;
+            error = b - a;
+            System.out.printf("n: %2d  a: %6.3f  f(a): %6.3f b: %6.3f  f(b): %6.3f c: %6.3f  f(c): %6.3f  error: %6.3f\n", n, a, fa, b, fb, c, fc, error);
+
+            n++;
+
+        }
+        if (n == nmax) {
+            System.out.println("Solution does not converge.\n");
+        }
+        System.out.println("Convergence at " + b + "\n");
+
+    }
+
+    private static void falsePositionMethod(double a, double b, int nmax, double errorThreshold, int functionToUse) {
+        double error = 0;
+        double c;
+        double fa, fb, fc;
+
         if (functionToUse == 1) {
             fa = function1(a);
             fb = function1(b);
@@ -270,101 +234,87 @@ public class Main {
             fb = function2(b);
         }
 
-        //If the absolute value of fa > absolute value of fb, swap a with b and fa with fb.
-        if (Math.abs(fa) > Math.abs(fb)) {
-            double temp = a;
-            double ftemp = fa;
-            a = b;
-            fa = fb;
-            b = temp;
-            fb = ftemp;
+        if (Math.signum(fa) == Math.signum(fb)) {
+            return;
         }
-        System.out.printf("n: %2d  a: %6.3f  f(a): %6.3f\n"
-                + "n: %2d  b: %6.3f  f(b): %6.3f\n", 0, a, fa, 1, b, fb);
 
+        double lastc = 0;
         double lastError = Double.POSITIVE_INFINITY;
         int divergeCount = 0;
-        for (int i = 2; i <= nmax; i++) {
-            //If the absolute value of fa > absolute value of fb, swap a with b and fa with fb.
-            if (Math.abs(fa) > Math.abs(fb)) {
-                double temp = a;
-                double ftemp = fa;
-                a = b;
-                fa = fb;
-                b = temp;
-                fb = ftemp;
-            }
-            error = fa * ((b - a) / (fb - fa));
-            b = a;
-            fb = fa;
+        for (int i = 0; i <= nmax; i++) {
+            c = (a * fb - b * fa) / (fb - fa);
+            error = (c - lastc) / c;
 
-            //If the current error is greater than the last error for 3 times in a row, solution is divergent.
-            //If solution is NaN, it does not converge.
             if (Math.abs(error) > Math.abs(lastError)) {
-                divergeCount++;
-            } else if (divergeCount >= 3) {
-                System.out.println("Solution is divergent.\n");
-                return;
-            } else if (Double.isNaN(b)) {
-                System.out.println("Solution does not converge.\n");
-                return;
-            } else {
-                divergeCount = 0;
+                System.out.println("Solution is divergent.");
+                break;
             }
+            
+            if (functionToUse == 1) {
+                fc = function1(c);
+
+            } else {
+                fc = function2(c);
+            }
+            System.out.printf("n: %2d  a: %6.3f  b: %6.3f  c: %6.3f  f(a): %6.3f  fb: %6.3f  fc: %6.3f  error: %6.3f\n", i, a, b, c, fa, fb, fc, error);
 
             if (Math.abs(error) <= errorThreshold) {
-                System.out.println("Convergence at " + b + ".\n");
+                System.out.println("Convergence at " + c + ".\n");
                 return;
             }
-            a = a - error;
-            if (functionToUse == 1) {
-                fa = function1(a);
+
+            lastc = c;
+            if ((fa < 0 && fc > 0)||(fa > 0 && fc < 0)) {
+                b = c;
+                fb = fc;
             } else {
-                fa = function2(a);
+                a = c;
+                fa = fc;
             }
-            System.out.printf("n: %2d  a: %6.3f  f(a): %6.3f  error: %6.3f\n", i, a, fa, error);
+
             lastError = error;
         }
         System.out.println("Does not converge after " + nmax + " iterations.\n");
     }
 
     private static void secantMethodModified(double x, double delta, int nmax, double errorThreshold, int functionToUse) {
-        double fx, fdeltaxPlusx, error; //f(x), f(deltax+x), error
+        double fx, fdxPlusx, error; //f(x), f(deltax+x), error
 
-        //Initialize function values,
+        
         if (functionToUse == 1) { //initializing f(x)
             fx = function1(x);
-            fdeltaxPlusx = function1(x + (delta * x));
+            fdxPlusx = function1(x + (delta * x));
         } else {
             fx = function2(x);
-            fdeltaxPlusx = function2(x + (delta * x));
+            fdxPlusx = function2(x + (delta * x));
         }
 
-        System.out.printf("n: %2d  x: %6.3f  f(x): %6.3f  delta: %6.3f  f(x + delta*x): %6.3f\n", 0, x, fx, delta, fdeltaxPlusx);
+        System.out.printf("n: %2d  x: %6.3f  f(x): %6.3f  delta: %6.3f  f(x + delta*x): %6.3f\n", 0, x, fx, delta, fdxPlusx); //print initial
 
         double lastError = Double.POSITIVE_INFINITY; //initialize as infinity
-        
+
         for (int i = 1; i <= nmax; i++) {
-            error = fx * ((delta * x) / (fdeltaxPlusx - fx)); 
+            error = fx * ((delta * x) / (fdxPlusx - fx));
 
-           if (Double.isNaN(x)) {   //
-                System.out.println("Solution does not converge.\n");
+            if (Double.isNaN(x)) {   //
+                System.out.println("Solution does not converge.\n"); //if x is NaN, the solution does not converge. --> typically if deltaxPlusx = f(x)
                 return;
-            } 
+            }
 
-            if (Math.abs(error) <= errorThreshold) {
+            if (Math.abs(error) <= errorThreshold) { // if the error is less than the error Threshhold given, then we have found a solution
                 System.out.println("Convergence at " + x + ".\n");
                 return;
             }
             x = x - error;
             if (functionToUse == 1) {
                 fx = function1(x);
-                fdeltaxPlusx = function1(x + (delta * x));
+                fdxPlusx = function1(x + (delta * x));
             } else {
                 fx = function2(x);
-                fdeltaxPlusx = function2(x + (delta * x));
+                fdxPlusx = function2(x + (delta * x));
             }
-            System.out.printf("n: %2d  x: %6.3f  f(x): %6.3f  error: %6.3f\n", i, x, fx, error);
+            error = fx * ((delta * x) / (fdxPlusx - fx));
+            System.out.printf("n: %2d  x: %6.3f  f(x): %6.3f  error: %6.3f\n", i, x, fx, error);    //print progress
             lastError = error;
         }
         System.out.println("Does not converge after " + nmax + " iterations.\n");
