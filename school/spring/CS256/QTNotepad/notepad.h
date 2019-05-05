@@ -1,3 +1,7 @@
+
+#ifndef NOTEPAD_H
+#define NOTEPAD_H
+
 #include <QMainWindow>
 
 namespace Ui {
@@ -16,27 +20,9 @@ public:
 private slots:
     void newDocument();
 
-    void Notepad::open()
-    {
-        QString fileName = QFileDialog::getOpenFileName(this, "Open the file");
-        QFile file(fileName);
-        currentFile = fileName;
-        if (!file.open(QIODevice::ReadOnly | QFile::Text)) {
-            QMessageBox::warning(this, "Warning", "Cannot open file: " + file.errorString());
-            return;
-        }
-        setWindowTitle(fileName);
-        QTextStream in(&file);
-        QString text = in.readAll();
-        ui->textEdit->setText(text);
-        file.close();
-    }
+    void open();
 
     void save();
-
-    void saveAs();
-
-    void print();
 
     void exit();
 
@@ -50,17 +36,9 @@ private slots:
 
     void redo();
 
-    void selectFont();
-
-    void setFontBold(bool bold);
-
-    void setFontUnderline(bool underline);
-
-    void setFontItalic(bool italic);
-
-    void about();
-
 private:
     Ui::Notepad *ui;
     QString currentFile;
 };
+
+#endif // NOTEPAD_H
