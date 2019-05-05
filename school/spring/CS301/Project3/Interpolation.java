@@ -1,5 +1,3 @@
-//Interpolation.java
-
 import java.io.*;
 import java.util.ArrayList;
 
@@ -168,15 +166,4 @@ public class Interpolation {
     private double round(double value) {
         return (double) Math.round(value * 1000) / 1000;
     }
-
-    public static void main(String[] args) {
-        Interpolation interpolation = new Interpolation("src\\input.txt");
-        interpolation.createTable();
-        interpolation.divideDifference();
-        interpolation.print();
-        interpolation.interpolation();
-        interpolation.simplifiedPolynomial();
-    }
 }
-
-//Polynomial.java
