@@ -1,3 +1,9 @@
+/*
+Name: Shayna Stewart
+Class: CS3010
+Project # 3
+Due: 5/11/19
+ */
 public class Driver {
 
   
@@ -5,8 +11,8 @@ public class Driver {
         Interpolation interpolation = new Interpolation("src\\input.txt");
         interpolation.createTable();
         interpolation.divideDifference();
-        interpolation.print();
-        interpolation.interpolation();
+        interpolation.printTable();
+        interpolation.interpolatedPolynomial();
         interpolation.simplifiedPolynomial();
     }
 }
