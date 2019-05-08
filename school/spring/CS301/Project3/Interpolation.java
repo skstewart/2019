@@ -1,3 +1,4 @@
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -10,14 +11,13 @@ public class Interpolation {
     public Interpolation(String filename) {
         this.filename = filename;
     }
-    
 
     public void createTable() {
         String[] x = null;
         String[] fx = null;
         FileInputStream fstream = null;
+        //reading in file: first check whether file exists. then read file. then store x and y values
 
-//Check to see if file exists or not
         try {
             fstream = new FileInputStream(this.filename);
         } catch (FileNotFoundException err) {
@@ -27,7 +27,6 @@ public class Interpolation {
         DataInputStream dis = new DataInputStream(fstream);
         BufferedReader br = new BufferedReader(new InputStreamReader(dis));
 
-//Check to see the contents of the file
         try {
             x = br.readLine().split("\\s+");
             fx = br.readLine().split("\\s+");
@@ -37,7 +36,6 @@ public class Interpolation {
 
         dTable = new double[x.length][fx.length + 1];
 
-//setting the x and y values
         for (int i = 0; i < x.length; ++i) {
             dTable[i][0] = Double.parseDouble(x[i]);
         }
@@ -46,40 +44,6 @@ public class Interpolation {
             dTable[i][1] = Double.parseDouble(fx[i]);
         }
 
-    }
-
-    //Multiplying by x
-    public ArrayList<Double> multiplyX(ArrayList<Double> array) {
-        ArrayList<Double> value = new ArrayList<Double>();
-        value.add(0.0);
-
-        for (int i = 0; i < array.size() - 1; i++) {
-            value.add(array.get(i));
-        }
-        return value;
-    }
-
-//Multiplying the constants
-    public ArrayList<Double> multiply(ArrayList<Double> array, double x) {
-        ArrayList<Double> value = new ArrayList<Double>();
-        for (double i : array) {
-            value.add(i * x);
-        }
-        return value;
-    }
-
-//Combine the like terms
-    public ArrayList<Double> combineLike(ArrayList<ArrayList<Double>> array) {
-        ArrayList<Double> combined = new ArrayList<Double>();
-        for (int i = 0; i < array.get(0).size(); i++) {
-            double sum = 0.0;
-            for (int j = 0; j < array.size(); j++) {
-                sum = sum + array.get(j).get(i);
-            }
-            combined.add(sum);
-        }
-
-        return combined;
     }
 
     public ArrayList<Double> polyFunction(double value, ArrayList<Double> array, int size) {
@@ -93,15 +57,45 @@ public class Interpolation {
         storeY.add(0, value);
 
         for (int i = 0; i < array.size(); i++) {
-            narray.add(multiplyX(storeY));
-            narray.add(multiply(storeY, -array.get(i)));
-            storeY = combineLike(narray);
+
+            // multiply by x
+            ArrayList<Double> temp = new ArrayList<Double>();
+            temp.add(0.0);
+
+            for (int x = 0; x < storeY.size() - 1; x++) {
+                temp.add(storeY.get(x));
+            }
+
+            narray.add(temp);
+            //end mult
+
+            //multiply array * (-array.get(i))
+            temp = new ArrayList<Double>();
+            for (double z : storeY) {
+                temp.add(z * (-array.get(i)));
+            }
+            narray.add(temp);
+
+            //end mult
+            //combine like terms
+            ArrayList temp2 = new ArrayList<Double>();
+            for (int y = 0; y < narray.get(0).size(); y++) {
+                double sum = 0;
+                for (int j = 0; j < narray.size(); j++) {
+                    sum = sum + narray.get(j).get(y);
+                }
+                temp2.add(sum);
+            }
+
+            storeY = temp2;
+
+            //
             narray.clear();
         }
 
-        int ysize = storeY.size();
+        int ySize = storeY.size();
 
-        for (int i = 0; i < size - ysize; i++) {
+        for (int i = 0; i < size - ySize; i++) {
             storeY.add(0.0);
         }
 
@@ -110,10 +104,6 @@ public class Interpolation {
 
     public void divideDifference() {
         int n = dTable[0].length;
-        /*make a table using the algorithm in the book
-*However, making j = 1 for the loop would not give the right result
-*
-         */
 
         for (int j = 2; j < n; j++) {
             for (int i = 0; i < n - j; i++) {
@@ -125,8 +115,7 @@ public class Interpolation {
             storeY.add(dTable[0][i]);
         }
     }
-    
-    
+
     public void printTable() {
         int n = dTable[0].length;
         System.out.printf("\t x \t f[] \t f[,] \t f[,,] \t f[,,,] ");
@@ -136,14 +125,13 @@ public class Interpolation {
             for (int j = 0; j < n - i; j++) {
                 System.out.printf(" ");
                 System.out.printf("\t %.3f", dTable[i][j]);
-                
+
             }
         }
     }
 
-
 //Making the interpolation function
-    public void interpolatedPoly() {
+    public void interpolatedPolynomial() {
         ArrayList<String> x = new ArrayList<String>();
         String sign = "";
         for (int i = 0; i < this.dTable.length - 1; ++i) {
@@ -154,7 +142,7 @@ public class Interpolation {
             } else if (xValue > 0) {
                 sign = "-";
             }
-            if (round(xValue) == 0) {
+            if (((xValue * 1000) / 1000) == 0) { //if rounded to 0
                 x.add("(x)");
             } else {
                 x.add(String.format("(x%s%.3f)", sign, xValue));
@@ -183,8 +171,7 @@ public class Interpolation {
     }
 
 //Simplified Polynomial
-    public void simplifiedPoly() {
-        Polynomial polynomial = new Polynomial();
+    public void simplifiedPolynomial() {
         ArrayList<Double> value = new ArrayList<Double>();
         ArrayList<ArrayList<Double>> array = new ArrayList<ArrayList<Double>>();
 
@@ -193,7 +180,7 @@ public class Interpolation {
         }
 
         value.add(0, storeY.get(0));
-        array.add(value);
+        array.add(0, value);
 
         for (int i = 1; i < storeY.size(); i++) {
             value = new ArrayList<Double>();
@@ -204,30 +191,29 @@ public class Interpolation {
             array.add(polyFunction(yvalue, value, dTable[0].length));
         }
 
-        value = combineLike(array);
+        //value = combineLike(array);
+        //combine like terms
+        ArrayList temp2 = new ArrayList<Double>();
+        for (int y = 0; y < array.get(0).size(); y++) {
+            double sum = 0;
+            for (int j = 0; j < array.size(); j++) {
+                sum = sum + array.get(j).get(y);
+            }
+            temp2.add(sum);
+        }
 
-        System.out.println("\nThe simplified polynomial is: " + printString(value)+"\n");
-    }
+        value = temp2;
 
-    private String printString(ArrayList<Double> array) {
         String polynomial = "";
         String power = "";
-        for (int i = 0; i < array.size() - 1; i++) {
-            Double f = array.get(i);
+        for (int i = value.size() - 1; i > -1; i--) {
+            Double j = value.get(i);
             power = String.format("x^%d", i);
-            if (f != 0) {
+            if (j != 0) {
                 if (i == 0) {
-                    polynomial += String.format(" %.3f", f);
+                    polynomial += String.format(" + %.3f", j);
                 } else {
-                    polynomial += String.format(" %+.3f%s", f, power);
+                    polynomial += String.format(" %+.3f%s", j, power);
                 }
             }
         }
-
-        return polynomial;
-    }
-
-    private double round(double value) {
-        return (double) Math.round(value * 1000) / 1000;
-    }
-}
