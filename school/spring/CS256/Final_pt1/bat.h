@@ -8,7 +8,6 @@ class Bat
 private:
 	Vector2f position;
 
-	// A RectangleShape object
 	RectangleShape batShape;
 
 	float batSpeed = .3f;
