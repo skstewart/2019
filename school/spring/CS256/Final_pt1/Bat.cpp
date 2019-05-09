@@ -1,6 +1,5 @@
 #include "Bat.h"
 
-// This the constructor and it is called when we create an object
 Bat::Bat(float startX, float startY)
 {
 	position.x = startX;
