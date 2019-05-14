@@ -35,8 +35,12 @@ namespace BigNumbers
 		//Multiplication
 		BigNumbers operator*(BigNumbers const &);
 		BigNumbers &operator*=(BigNumbers const &);
-		BigNumbers operator*(long long const &);
-		BigNumbers &operator*=(int const &);
+
+
+		//Division
+		BigNumbers operator/(BigNumbers const &);
+		BigNumbers &operator/=(BigNumbers const &);
+
 
 
 		//Access
