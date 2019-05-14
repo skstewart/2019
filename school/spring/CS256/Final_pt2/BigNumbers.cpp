@@ -7,7 +7,7 @@ using namespace std;
 namespace BigNumbers
 {
 
-	//Constructor
+	//Constructors for the BigNumber objects
 	BigNumbers::BigNumbers()
 	{
 		positive = true;
@@ -20,7 +20,7 @@ namespace BigNumbers
 		base(b.base),
 		skip(b.skip) { }
 
-	BigNumbers::BigNumbers(long long value)
+	BigNumbers::BigNumbers(long long value)	//pushing a long into the vector
 	{
 		base = BigNumbers::MAX_SIZE;
 		skip = 0;
@@ -38,7 +38,7 @@ namespace BigNumbers
 		}
 	}
 
-	BigNumbers::BigNumbers(string stringInteger)
+	BigNumbers::BigNumbers(string stringInteger) //pushing the large number (given a string) into the vector
 	{
 		int size = stringInteger.length();
 
@@ -64,7 +64,7 @@ namespace BigNumbers
 		}
 	}
 
-	//Adding
+	//Addition
 	BigNumbers BigNumbers::operator+(BigNumbers const &b) const
 	{
 		BigNumbers c = *this;
@@ -180,7 +180,7 @@ namespace BigNumbers
 		return *this;
 	}
 
-	//Division
+	//Division, using same logic as ultiplication but multiplying by the reciprocal of the second number
 	BigNumbers BigNumbers::operator/(BigNumbers const &b)
 	{
 		if (b.number.size() == 1) return *this *= 1/(b.number[0]);
@@ -206,6 +206,8 @@ namespace BigNumbers
 	}
 
 
+	//out stream (<< overloaded operator to print the number in the proper order)
+
 	std::ostream &operator<<(std::ostream &out, BigNumbers const &a)
 	{
 		if (!a.number.size()) return out << 0;
@@ -226,15 +228,7 @@ namespace BigNumbers
 		return out;
 	}
 
-	std::istream &operator>>(std::istream &in, BigNumbers &a)
-	{
-		std::string str;
-		in >> str;
-
-		a = str;
-
-		return in;
-	}
+	
 
 	int BigNumbers::segment_length(int segment) const
 	{
