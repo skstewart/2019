@@ -1,4 +1,3 @@
-
 #include <string>
 #include <sstream>
 #include <map>
@@ -105,39 +104,7 @@ namespace BigNumbers
 		return *this;
 	}
 
-	BigNumbers BigNumbers::operator+(long long const &b) const
-	{
-		BigNumbers c = *this;
-		c += b;
-
-		return c;
-	}
-
-	BigNumbers &BigNumbers::operator+=(long long b)
-	{
-		vector<int>::iterator it = number.begin();
-		if (skip > number.size()) {
-			number.insert(number.end(), skip - number.size(), 0);
-		}
-		it += skip;
-		bool initial_flag = true;
-		while (b || initial_flag) {
-			initial_flag = false;
-			if (it != number.end()) {
-				*it += b % base;
-				b /= base;
-				b += *it / base;
-				*it %= base;
-				++it;
-			}
-			else {
-				number.push_back(0);
-				it = number.end() - 1;
-			}
-		}
-
-		return *this;
-	}
+	
 
 	//Subtraction
 	BigNumbers BigNumbers::operator-(BigNumbers const &b) const
@@ -212,30 +179,32 @@ namespace BigNumbers
 
 		return *this;
 	}
-	
-	BigNumbers BigNumbers::operator*(long long const &b)
+
+	//Division
+	BigNumbers BigNumbers::operator/(BigNumbers const &b)
 	{
-		BigNumbers c = *this;
-		c *= b;
+		if (b.number.size() == 1) return *this *= 1/(b.number[0]);
+		vector<int>::iterator it1;
+		vector<int>::const_iterator it2;
+		BigNumbers c;
+		for (it1 = number.begin(); it1 != number.end(); ++it1) {
+			for (it2 = b.number.begin(); it2 != b.number.end(); ++it2) {
+				c.skip = (unsigned int)(it1 - number.begin()) + (it2 - b.number.begin()); //TODO
+				c += (long long)(*it1) *( 1/(*it2));
+			}
+		}
+		c.skip = 0;
 
 		return c;
 	}
-	
 
-	BigNumbers &BigNumbers::operator*=(int const &b)
+	BigNumbers &BigNumbers::operator/=(BigNumbers const &b)
 	{
-		std::vector<int>::iterator it = number.begin();
-		long long sum = 0;
-		while (it != number.end()) {
-			sum += (long long)(*it) * b;
-			*it = (int)(sum % base);
-			sum /= base;
-			++it;
-		}
-		if (sum) number.push_back((int)sum);
+		*this = *this / b;
 
 		return *this;
 	}
+
 
 	std::ostream &operator<<(std::ostream &out, BigNumbers const &a)
 	{
