@@ -98,6 +98,7 @@ public class Game extends Application {
         Label OverAllScore = new Label("Overall Score: " + overallScore);
         Label RoundScore = new Label("Round Score: " + roundScore);
         Label RollsRemaining = new Label("Rolls Remaining: " + rollsRemaining);
+        Label WinLabel;
 
         Button roll = new Button("Roll Dice");
         roll.setOnAction(new EventHandler<ActionEvent>() {
@@ -107,6 +108,7 @@ public class Game extends Application {
 
                     //this resets the game but keeps the overall score for the new game
                     win = false;
+                    RollsRemaining.setId( "label");
                     roll.setText("Roll Dice");
                     rollsRemaining = 3;
                     RollsRemaining.setText("Rolls Remaining: " + rollsRemaining);
@@ -142,6 +144,8 @@ public class Game extends Application {
                     rollsRemaining--;
                     win = true;
                     String hand = handCalculator();
+                    RollsRemaining.setId("label-win");
+                    
                     RollsRemaining.setText(hand + "!");
                     roll.setText("New Game");
                     overallScore += roundScore;
