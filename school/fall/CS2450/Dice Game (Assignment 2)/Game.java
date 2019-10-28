@@ -1,8 +1,15 @@
 //Shayna Stewart
 //Assignment 2: Dice game
 //Due: 10/31/19
+//Description: Dice game where player rolls five dice to try and achieve certain hands. Certain hands give better scores. User is
+//  able to hold dice to prevent them from being rolled, effective after the first roll. The game involves three rolls total before
+//  the hand is scored. The current game's score is added to the total score displayed, and the user may choose to play again.
+//  Uses JavaFX, as well as CSS
+//Images copyright Jonathan Johannsen
 
-import java.awt.Color;
+
+
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import javafx.application.Application;
@@ -19,7 +26,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.util.Random;
 import javafx.event.Event;
 import javafx.scene.Group;
@@ -127,7 +133,7 @@ public class Game extends Application {
                     vbox.setAlignment(Pos.CENTER);
                     vbox.setPadding(new Insets(10));
                     Scene myScene = new Scene(vbox);
-                    myScene.getStylesheets().add("Die.css");
+                    myScene.getStylesheets().add("Dice.css");
 
                     myStage.setScene(myScene);
                     myStage.setTitle("Dice Game");
@@ -169,7 +175,7 @@ public class Game extends Application {
         vbox.setAlignment(Pos.CENTER);
         vbox.setPadding(new Insets(10));
         Scene myScene = new Scene(vbox);
-        myScene.getStylesheets().add("Die.css");
+        myScene.getStylesheets().add("Dice.css");
 
         myStage.setScene(myScene);
         myStage.setTitle("Dice Game");
