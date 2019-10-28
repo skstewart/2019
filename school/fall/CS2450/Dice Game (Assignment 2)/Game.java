@@ -60,29 +60,29 @@ public class Game extends Application {
     @Override
     public void start(Stage myStage) throws FileNotFoundException {
 
-        FileInputStream input = new FileInputStream("resources\\images\\Dice1.png");
+        FileInputStream input = new FileInputStream("images\\Dice1.png");
         d1 = new Image(input);
-        input = new FileInputStream("resources\\images\\Dice2.png");
+        input = new FileInputStream("images\\Dice2.png");
         d2 = new Image(input);
-        input = new FileInputStream("resources\\images\\Dice3.png");
+        input = new FileInputStream("images\\Dice3.png");
         d3 = new Image(input);
-        input = new FileInputStream("resources\\images\\Dice4.png");
+        input = new FileInputStream("images\\Dice4.png");
         d4 = new Image(input);
-        input = new FileInputStream("resources\\images\\Dice5.png");
+        input = new FileInputStream("images\\Dice5.png");
         d5 = new Image(input);
-        input = new FileInputStream("resources\\images\\Dice6.png");
+        input = new FileInputStream("images\\Dice6.png");
         d6 = new Image(input);
-        input = new FileInputStream("resources\\images\\Dice1Held.png");
+        input = new FileInputStream("images\\Dice1Held.png");
         d1h = new Image(input);
-        input = new FileInputStream("resources\\images\\Dice2Held.png");
+        input = new FileInputStream("images\\Dice2Held.png");
         d2h = new Image(input);
-        input = new FileInputStream("resources\\images\\Dice3held.png");
+        input = new FileInputStream("images\\Dice3held.png");
         d3h = new Image(input);
-        input = new FileInputStream("resources\\images\\Dice4held.png");
+        input = new FileInputStream("images\\Dice4held.png");
         d4h = new Image(input);
-        input = new FileInputStream("resources\\images\\Dice5held.png");
+        input = new FileInputStream("images\\Dice5held.png");
         d5h = new Image(input);
-        input = new FileInputStream("resources\\images\\Dice6held.png");
+        input = new FileInputStream("images\\Dice6held.png");
         d6h = new Image(input);
         overallScore = 0;
         roundScore = 0;
