@@ -1,0 +1,111 @@
+.chart-bar {
+    -fx-background-color: linear-gradient(derive(-fx-bar-fill,-30%), derive(-fx-bar-fill,-40%)),
+        linear-gradient(derive(-fx-bar-fill,80%), derive(-fx-bar-fill, 0%)),
+        linear-gradient(derive(-fx-bar-fill,30%), derive(-fx-bar-fill,-10%));
+    -fx-background-insets: 0,1,2;
+    -fx-background-radius: 5 5 0 0, 4 4 0 0, 3 3 0 0;
+}
+
+.data0.chart-bar { -fx-bar-fill: #f9d900; }
+.data1.chart-bar { -fx-bar-fill: #a9e200; }
+.data2.chart-bar { -fx-bar-fill: #22bad9; }
+.data3.chart-bar { -fx-bar-fill: #0181e2; }
+
+
+.chart-line-symbol {
+    -fx-background-color: #f9d900, white;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}
+.chart-series-line {
+    -fx-stroke: white;
+    -fx-stroke-width: 4px;
+    -fx-effect: dropshadow( two-pass-box , rgba(0,0,0,0.3) , 8, 0.0 , 0 , 3 );
+}
+.data0.chart-line-symbol { -fx-background-color: #f9d900, white; }
+.data1.chart-line-symbol { -fx-background-color: #a9e200, white; }
+.data2.chart-line-symbol { -fx-background-color: #22bad9, white; }
+.data3.chart-line-symbol { -fx-background-color: #0181e2, white; }
+
+
+.chart-area-symbol {
+
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 4px; /* makes sure this remains circular */
+    -fx-padding: 3px;
+    -fx-stroke: white;
+    -fx-stroke-width: 4px;
+}
+.data0.chart-area-symbol { -fx-background-color: #f9d900, white; }
+.data1.chart-area-symbol { -fx-background-color: #a9e200, white; }
+.data2.chart-area-symbol { -fx-background-color: #22bad9, white; }
+.data3.chart-area-symbol { -fx-background-color: #0181e2, white; }
+.chart-series-area-line {
+    -fx-stroke: white;
+    -fx-stroke-width: 4px;
+        -fx-effect: dropshadow( two-pass-box , rgba(0,0,0,0.3) , 8, 0.0 , 0 , 3 );
+}
+.chart-series-area-fill {
+    -fx-stroke: null;
+    -fx-fill: #f9d90044;
+
+}
+
+.data0.chart-series-area-fill { -fx-fill: #f9d90044; }
+.data1.chart-series-area-fill { -fx-fill: #a9e20044; }
+.data2.chart-series-area-fill { -fx-fill: #22bad944; }
+.data3.chart-series-area-fill { -fx-fill: #0181e244; }
+
+.area-legend-symbol {
+    -fx-padding: 6px;
+    -fx-background-radius: 6px; /* makes sure this remains circular */
+    -fx-background-insets: 0, 3;
+}
+
+.root {
+
+    -fx-base: #d0d0d0;
+
+    -fx-background: #f4f4f4;
+
+    -fx-control-inner-background: white;
+
+    -fx-dark-text-color: black;
+    -fx-mid-text-color: #292929;
+    -fx-light-text-color: white;
+
+    -fx-accent: #0093ff;
+
+
+    -fx-focus-color: #0093ff;
+
+
+    -fx-color: -fx-base;
+
+
+    -fx-disabled-opacity: 0.4;
+
+    -fx-hover-base: ladder(
+        -fx-base,
+        derive(-fx-base,20%) 20%,
+        derive(-fx-base,30%) 35%,
+        derive(-fx-base,40%) 50%
+        );
+
+    -fx-pressed-base: derive(-fx-base,-20%);
+
+    -fx-focused-base: -fx-base;
+
+    -fx-text-background-color: ladder(
+        -fx-background,
+        -fx-light-text-color 45%,
+        -fx-dark-text-color  46%,
+        -fx-dark-text-color  59%,
+        -fx-mid-text-color   60%
+        )
+}
+
+.text-field{
+    -fx-min-width: 200;
+}
